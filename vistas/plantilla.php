@@ -29,7 +29,7 @@ session_start();
 </head>
 <body class="bg-gradient-default">
 	<?php if (isset($_GET["pagina"])){  ?>
-		<?php if ($_GET["pagina"] == "registro" || $_GET["pagina"] == "inicio" || $_GET["pagina"] == "salir" || $_GET["pagina"] == "editar") 
+		<?php if (  $_GET["pagina"] == "inicio" || $_GET["pagina"] == "salir" || $_GET["pagina"] == "editar") 
 		    {include "paginas/".$_GET["pagina"].".php"; }  
 			
 			elseif ( $_GET["pagina"] == "ingreso" ) { ?>
@@ -38,6 +38,10 @@ session_start();
 				     <?php  include "paginas/".$_GET["pagina"].".php"; ?>
 				</div>
 			</div>
+		<?php } elseif($_GET["pagina"] == "registro"){ ?>
+			<div class="container">
+		     	<?php  include "paginas/registro.php"; ?>
+		    </div>
 		<?php } ?>
 	
 	<?php } else { ?>

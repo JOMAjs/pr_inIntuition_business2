@@ -1,10 +1,19 @@
 <?php
+
 if ((isset($_SESSION["validarIngreso"]) && $_SESSION["validarIngreso"] != "ok") || !isset($_SESSION["validarIngreso"])) {
 	echo '<script> window.location = "ingreso"; </script>'; 
 	return;	
 }
 
-$usuarios = FormsControlador::SeleccionarRegistros();
+if ($_SESSION["status"] == 1) {
+    # code...
+    $usuarios = FormsControlador::SeleccionarRegistrosInicio($_SESSION['token'], $_SESSION["status"]);
+} else {
+    $usuarios1 = FormsControlador::SeleccionarRegistros2($_SESSION['token'], $_SESSION["status"]);
+}
+
+
+
 ?>
 
     <!-- Page Wrapper -->
@@ -131,7 +140,7 @@ $usuarios = FormsControlador::SeleccionarRegistros();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo($_SESSION["nombre"]); ?></span>
 
                             </a>
                             <!-- Dropdown - User Information -->
@@ -156,7 +165,7 @@ $usuarios = FormsControlador::SeleccionarRegistros();
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard: Administrador</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard: <?php echo($_SESSION["nombre"]); ?></h1>
                         
                     </div>
                     <!-- Content Row -->
@@ -174,13 +183,14 @@ $usuarios = FormsControlador::SeleccionarRegistros();
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
+                                    <?php if($_SESSION["status"] == 1): ?>
                                     <table class="table table-striped">
                                         <thead>
 		                                    <tr>
 		                                    	<th>No.</th>
 		                                    	<th>Nombre</th>
 		                                    	<th>Email</th>
-		                                    	<th>Creación</th>
+		                                    	<th>Pais</th>
 		                                    	<th>Acciones</th>
 		                                    </tr>
 	                                    </thead>
@@ -190,7 +200,7 @@ $usuarios = FormsControlador::SeleccionarRegistros();
 		                                    		<td><?php echo $key + 1 ?></td>
 		                                    		<td><?php echo $value["nombre"]; ?></td>
 		                                    		<td><?php echo $value["email"]; ?></td>
-		                                    		<td><?php echo $value["fecha"]; ?></td>
+		                                    		<td><?php echo $value["pais"]; ?></td>
 
 		                                    		<td>
 		                                    			<div class="btn-group">
@@ -213,6 +223,22 @@ $usuarios = FormsControlador::SeleccionarRegistros();
 		                                    <?php endforeach ?>
 	                                    </tbody>
                                     </table>
+                                    <?php elseif($_SESSION["status"] == 2): ?>
+                                        <?php foreach ($usuarios1 as $key => $value): ?>
+                                            <div class="form-group row">
+                                                <div class="col-sm-3">
+                                                    <img src="vistas/image/productos/<?php echo($value['imagen']); ?>" alt="" srcset="">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                   
+                                                    <h5 class="text-danger">Comida Favorita <?php echo($value['comida_favorita']); ?></h5>
+                                                    <h5 class="text-primary">Artista Favorito <?php echo($value['artista_favorito']); ?></h5>
+                                                    <h5 class="text-info">Color Favorito <?php echo($value['color_favorito']); ?></h5>
+                                                </div>
+                                            </div>                                  
+                                        <?php endforeach ?> 
+                                    <?php endif; ?>
+                                    
                                 </div>
                             </div>
                         </div>

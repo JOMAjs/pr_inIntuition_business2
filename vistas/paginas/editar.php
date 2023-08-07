@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET["token"])) {
-	$usuario = FormsControlador::SeleccionarRegistros("token", $_GET["token"]);
+	$usuario = FormsControlador::SeleccionarRegistros2($_GET["token"],1);
 }
 ?>
 
@@ -168,14 +168,14 @@ if (isset($_GET["token"])) {
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Editando a <?php //echo $usuario["nombre"]."  ".$usuario["apellido"]; ?></h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Editando a <?php echo $usuario["nombre"]."  ".$usuario["apellido"]; ?></h6>
                                    
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
 									<form class="" method="post">
 									<?php
-		                                $actualizar = FormsControlador::ActualizarRegistro();
+		                                $actualizar = FormsControlador::ActualizarMisfavoritos();
 
 		                                if ($actualizar == "ok") {
 		                                	echo '<script> 
@@ -213,25 +213,16 @@ if (isset($_GET["token"])) {
 		                                }
 									?>
 									<input type="hidden" name="token" value="<?php echo $usuario["token"]; ?>">
-										<div class="form-row">
-											<div class="form-group col-md-6">
-                                                <label for="nombre">Nombre</label>
-												<input value="<?php echo $usuario["nombre"]; ?>" type="text" name="nombre" class="form-control" id="nombre" placeholder="Editar Nombre">
-											</div>
-											<div class="form-group col-md-6">
-                                                <label for="apellido">Apellido</label>
-												<input value="<?php echo $usuario["apellido"]; ?>" type="text" name="apellido" class="form-control" id="nombre" placeholder="Editar apellido">
-											</div>
-										</div>
 
                                         <div class="form-row">
-											<div class="form-group col-md-6">
-                                                <label for="">Email</label>
-												<input value="<?php echo $usuario["email"]; ?>" type="text" name="correo" class="form-control" id="nombre" placeholder="Editar Email">
-											</div>
+
 											<div class="form-group col-md-6">
                                                 <label for="comida">Comida favorita</label>
-												<input value="<?php echo $usuario["comida_favorita"]; ?>" type="text" name="comida_favoritos" class="form-control" id="nombre" placeholder="Editar comida">
+												<input value="<?php echo $usuario["comida_favorita"]; ?>" type="text" name="comida_favorito" class="form-control" id="nombre" placeholder="Editar comida">
+											</div>
+                                            <div class="form-group col-md-6">
+                                                <label for="comida">Lugar favorit0</label>
+												<input value="<?php echo $usuario["comida_favorita"]; ?>" type="text" name="Lugar_favorito" class="form-control" id="nombre" placeholder="Editar comida">
 											</div>
 										</div>
 
@@ -246,10 +237,7 @@ if (isset($_GET["token"])) {
 												<input value="<?php echo $usuario["color_favorito"]; ?>" type="text" name="color_favorito" class="form-control" id="nombre" placeholder="Editar comida">
 											</div>
 										</div>
-
-                                        <input type="password" class="form-control" placeholder="Nueva contraseña" id="pwd" name="editarContrasena">
-				                         <input type="hidden" name="contrasenaActual" value="<?php echo $usuario["contrasena"]; ?>">
-
+                                        <a href="inicio"  class="btn btn-danger float-left">Atras</a>
                                         <button  class="btn btn-primary float-right">editar</button>
 									</form>
                                 </div>

@@ -9,7 +9,8 @@
 						<div class="text-center">
 							<h1 class="h4 text-gray-900 mb-4">Crea Tu Formulario al Group!</h1>
 						</div>
-						<form class="user" method="POST">
+						<form class="user" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="hidden_image" id="hidden_image" value="">
 						<?php 
 						    #Esto es si el método es static y retornara algo.
 						    #$registro = FormsControlador::Registro();
@@ -57,6 +58,7 @@
 									id="telefono" placeholder="Telefono">
 								</div>
 							</div>
+
 							<div class="form-group">
 								<select name="pais" id="pais" class="form-control col-4">
 									<option value="">Pais</option>
@@ -94,7 +96,7 @@
 							</div>
 						
 							<div class="form-group">
-								<input type="file" name="foto" class="form-control"
+								<input type="file" name="imagen" id="imagenes" class="form-control"
 								placeholder="foto">
 							</div>
 						

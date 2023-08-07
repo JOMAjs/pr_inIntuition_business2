@@ -22,17 +22,20 @@ USE `db_prueba`;
 -- Volcando estructura para tabla db_prueba.mis_favoritos
 CREATE TABLE IF NOT EXISTS `mis_favoritos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `usuario_id` int DEFAULT NULL,
+  `usuario_id` varchar(50) DEFAULT NULL,
   `comida_favorita` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `lugar_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `artista_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `color_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `imagen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla db_prueba.mis_favoritos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_prueba.mis_favoritos: ~2 rows (aproximadamente)
 DELETE FROM `mis_favoritos`;
+INSERT INTO `mis_favoritos` (`id`, `usuario_id`, `comida_favorita`, `lugar_favorito`, `artista_favorito`, `color_favorito`, `imagen`) VALUES
+	(1, 'd4e5312d093a71f2061da423d8efd5d9', 'bandeja paisabandeja paisa', 'malecon', 'mana', 'azul', 'avatar5.png'),
+	(2, 'd3c994ccd5df48a08c4117d5256a53e9', 'espagetisespagetis', 'na', 'na', 'na', 'avatar2.png');
 
 -- Volcando estructura para tabla db_prueba.registro
 CREATE TABLE IF NOT EXISTS `registro` (
@@ -45,18 +48,17 @@ CREATE TABLE IF NOT EXISTS `registro` (
   `pais` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `email` varchar(90) DEFAULT NULL,
   `contrasena` varchar(90) DEFAULT NULL,
-  `comida_favorita` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `lugar_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `artista_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `color_favorito` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `intentos` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `fecha` timestamp NULL DEFAULT NULL,
   `estado` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla db_prueba.registro: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_prueba.registro: ~2 rows (aproximadamente)
 DELETE FROM `registro`;
+INSERT INTO `registro` (`id`, `token`, `nombre`, `apellido`, `sele_telefono`, `telefono`, `pais`, `email`, `contrasena`, `intentos`, `fecha`, `estado`) VALUES
+	(1, 'd4e5312d093a71f2061da423d8efd5d9', 'dev', 'php', '+57', '436687', 'CO', 'php@gmail.com', '$2a$07$cursophpadsliveandrese7WY1WyNNBxAFyeMJnNiUAtvjJJuqLm6', '0', NULL, 1),
+	(2, 'd3c994ccd5df48a08c4117d5256a53e9', 'bella', 'camalidades', '+57', '574', 'CO', 'bella@gmail.com', '$2a$07$cursophpadsliveandrese7WY1WyNNBxAFyeMJnNiUAtvjJJuqLm6', '0', NULL, 2);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

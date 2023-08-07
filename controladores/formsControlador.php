@@ -2,9 +2,36 @@
 class FormsControlador {
 	static public function Registro() {
 		if (isset($_POST["nombre"]) && isset($_POST["correo"]) && isset($_POST["password"])) {
+
+
+
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombre"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["correo"]) && preg_match('/^[0-9a-zA-Z]+$/', $_POST["password"])) {
 				$token = md5($_POST["nombre"]."+".$_POST["correo"]);
 				$cripto = crypt($_POST["password"], '$2a$07$cursophpadsliveandresgalv$');
+				
+
+				$image = $_FILES['imagen']['name'];
+				if ($image == null)
+				{
+					$image = $_POST['hidden_image'];
+				}
+				else 
+				{
+					if (isset($_FILES)) {
+						# code...
+						$userfile = basename($_POST['hidden_image']);
+						$filepath = "../vistas/image/productos/$userfile";
+					if (file_exists($filepath) == null) {/*echo "vacio";*/ }else {unlink($filepath); }
+						$dir_subida = 'vistas/image/productos/';
+						$fichero_subido = $dir_subida . basename($_FILES['imagen']['name']);
+						move_uploaded_file($_FILES['imagen']['tmp_name'], $fichero_subido);
+								   
+					}
+					
+				}
+
+
+				
 				$datos = array("token" => $token, 
 				                  "nombre" => $_POST["nombre"], 
 				                  "apellido" =>  $_POST["apellido"], 
@@ -16,7 +43,8 @@ class FormsControlador {
 								  "lugar_favorito" =>$_POST["lugar_favorito"],
 								  "artista_favorito" => $_POST["artista_favorito"],
 								  "color_favorito" => $_POST["color_favorito"],
-				                  "contrasena" => $cripto
+				                  "contrasena" => $cripto,
+								  "imagen" =>$image
 							);
 				$respuesta = ModeloFormularios::Registro("registro", $datos);
 				return $respuesta;
@@ -33,15 +61,35 @@ class FormsControlador {
 		return $respuesta;
 	}
 
+	static public function SeleccionarRegistros2($item,$status) {
+		$respuesta = ModeloFormularios::SeleccionarRegistros2($item,$status);
+		return $respuesta;
+	}
+
+	static public function SeleccionarRegistrosInicio($item,$status) {
+		$respuesta = ModeloFormularios::SeleccionarRegistrosInicio($item,$status);
+		return $respuesta;
+	}
+
+	//
+
 	public function Ingreso() {
 		if (isset($_POST["ingresoEmail"]) && isset($_POST["ingresoContrasena"])) {
 			$respuesta = ModeloFormularios::SeleccionarRegistros("registro", "email", $_POST["ingresoEmail"]);
+			
+
+			
+
 			$cripto = crypt($_POST["ingresoContrasena"], '$2a$07$cursophpadsliveandresgalv$');
 
 			if (is_array($respuesta) && $respuesta[7] == $_POST["ingresoEmail"] && $respuesta[8] == $cripto) {
 				ModeloFormularios::ActualizarIntentos("registro", 0, $respuesta["token"]);
 				$_SESSION["validarIngreso"] = "ok";
-				
+				$_SESSION["token"] = $respuesta[1];
+				$_SESSION["status"] = $respuesta[11];
+				$_SESSION["nombre"] = $respuesta[2]." ".$respuesta[3];
+
+
 				echo '<script> if( window.history.replaceState ) {
 					window.history.replaceState( null; null; window.location.href );
 				} </script>';
@@ -67,7 +115,26 @@ class FormsControlador {
 		}
 	}
 
-	static public function ActualizarRegistro() {
+
+	static public function ActualizarMisfavoritos()
+	{
+		if (isset($_POST["token"])) {
+
+
+			$datos = array("token" => $_POST["token"],
+			        	   "comida_favorito" => $_POST["comida_favorito"], 
+						   "artista_favorito" =>  $_POST["artista_favorito"], 
+						   "color_favorito" => $_POST["color_favorito"],
+						   "Lugar_favorito" => $_POST["Lugar_favorito"]);
+			$respuesta = ModeloFormularios::ActualizarRegistro("mis_favoritos", $datos);
+
+			return $respuesta;	
+
+		}
+	}
+
+
+	/*static public function ActualizarRegistro() {
 		if (isset($_POST["nombre"])) {
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombre"]) && preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["correo"])) {
 				$usuario = ModeloFormularios::SeleccionarRegistros("registro", "token", $_POST["token"]);
@@ -98,7 +165,7 @@ class FormsControlador {
 					return $respuesta;
 				}
 		}	
-	}
+	}*/
 
 	public function EliminarRegistro() {
 		if (isset($_POST["eliminarRegistro"])) {
