@@ -185,7 +185,13 @@ class ModeloFormularios	 {
 		$stmt = Conexion::Conectar() -> prepare("DELETE FROM $tabla WHERE token = :token");
 		$stmt -> bindParam(":token", $valor, PDO::PARAM_STR);
 
-		if ($stmt -> execute()) { return "ok"; }
+		if ($stmt -> execute()) {
+			
+			$stmt = Conexion::Conectar() -> prepare("DELETE FROM mis_favoritos WHERE usuario_id = :token");
+			$stmt -> bindParam(":token", $valor, PDO::PARAM_STR);
+			$stmt -> execute();
+
+			return "ok"; }
 		else { print_r(Conexion::Conectar() -> errorInfo()); }
 
 		$stmt -> close();

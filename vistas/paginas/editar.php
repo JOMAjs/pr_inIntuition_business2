@@ -183,26 +183,12 @@ if (isset($_GET["token"])) {
 		                                				window.history.replaceState( null, null, window.location.href );
 		                                			} 
 		                                			</script>';
-		                                	echo '<script>
-		                                			var datos = new FormData();
-		                                			datos.append("validarToken", "'.md5($_POST["nombre"]."+".$_POST["correo"]).'");
-
-		                                			$.ajax({
-		                                				url: "ajax/formulariosAjax.php",
-		                                				method: "POST",
-		                                				data: datos,
-		                                				cache: false,
-		                                				contentType: false,
-		                                				processData: false,
-		                                				dataType: "json",
-		                                				success: function(respuesta) {
-		                                					$("#editarEmail").val(respuesta["email"]);
-		                                					$("#editarNombre").val(respuesta["nombre"]);
-		                                				}
-		                                			});
-		                                			</script>';
                                                     echo '<div class="alert alert-success">El usuario ha sido actualizado</div>';
-                                                    echo '<script> window.location = "inicio"; </script>';
+                                                    echo '<script>
+                                                                setTimeout(function() {
+                                                                    window.location = "inicio";
+                                                                },2000)
+                                                          </script>';
 		                                	
 		                                }
 		                                if ($actualizar == "error") {
@@ -221,8 +207,8 @@ if (isset($_GET["token"])) {
 												<input value="<?php echo $usuario["comida_favorita"]; ?>" type="text" name="comida_favorito" class="form-control" id="nombre" placeholder="Editar comida">
 											</div>
                                             <div class="form-group col-md-6">
-                                                <label for="comida">Lugar favorit0</label>
-												<input value="<?php echo $usuario["comida_favorita"]; ?>" type="text" name="Lugar_favorito" class="form-control" id="nombre" placeholder="Editar comida">
+                                                <label for="comida">Lugar favorito</label>
+												<input value="<?php echo $usuario["lugar_favorito"]; ?>" type="text" name="Lugar_favorito" class="form-control" id="nombre" placeholder="Editar comida">
 											</div>
 										</div>
 

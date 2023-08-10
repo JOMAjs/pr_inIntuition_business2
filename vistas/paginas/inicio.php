@@ -20,7 +20,7 @@ if ($_SESSION["status"] == 1) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -188,9 +188,12 @@ if ($_SESSION["status"] == 1) {
                                         <thead>
 		                                    <tr>
 		                                    	<th>No.</th>
-		                                    	<th>Nombre</th>
+                                                <th>Profile</th>
+		                                    	<th>Nombre </th>
 		                                    	<th>Email</th>
+                                                <th>Telefono</th>
 		                                    	<th>Pais</th>
+                                                <th>Los Favoritos</th>
 		                                    	<th>Acciones</th>
 		                                    </tr>
 	                                    </thead>
@@ -198,9 +201,15 @@ if ($_SESSION["status"] == 1) {
 		                                    <?php foreach ($usuarios as $key => $value): ?>
 		                                    	<tr>
 		                                    		<td><?php echo $key + 1 ?></td>
-		                                    		<td><?php echo $value["nombre"]; ?></td>
+		                                    		<td><img src="vistas/image/productos/<?php echo $value["imagen"]; ?>" class="img-thumbnail" width="60px" alt="" srcset=""></td>
+                                                    <td><?php echo $value["nombre"]." ".$value["apellido"]; ?></td>
 		                                    		<td><?php echo $value["email"]; ?></td>
+                                                    <td><?php echo $value["sele_telefono"]."-".$value["telefono"]; ?></td>
 		                                    		<td><?php echo $value["pais"]; ?></td>
+                                                    <td>
+                                                        <p class="text-lowercase"><?php echo $value["comida_favorita"]; ?></p>
+                                                        <p><?php echo $value["lugar_favorito"]; ?></p>
+                                                    </td>
 
 		                                    		<td>
 		                                    			<div class="btn-group">
@@ -209,6 +218,7 @@ if ($_SESSION["status"] == 1) {
 		                                    				</div>
 		                                    				<form method="post">
 		                                    					<input type="hidden" value="<?php echo $value["token"]; ?>" name="eliminarRegistro">
+                                                                <input type="hidden" value="<?php echo $value["imagen"]; ?>" name="imagen">
 		                                    					<button type="submit" class="btn-sm btn btn-danger"><i class="fas fa-trash-alt"></i>delete</button>
 
 		                                    					<?php
@@ -224,18 +234,34 @@ if ($_SESSION["status"] == 1) {
 	                                    </tbody>
                                     </table>
                                     <?php elseif($_SESSION["status"] == 2): ?>
+
+
+
                                         <?php foreach ($usuarios1 as $key => $value): ?>
-                                            <div class="form-group row">
-                                                <div class="col-sm-3">
-                                                    <img src="vistas/image/productos/<?php echo($value['imagen']); ?>" alt="" srcset="">
-                                                </div>
-                                                <div class="col-sm-6">
+
+                                            <div class="card align-center" style="width: 18rem;">
+                                                <img src="vistas/image/productos/<?php echo($value['imagen']); ?>" class="card-img-top" alt="Imgae">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Infomacion Basica</h5>
+                                                    <p class="card-text">
+                                                        <strong><i class="fas fa-map-marker-alt"></i> Lugar Favorito</strong>
+                                                        <p class="text-muted"><?php echo($value['lugar_favorito']); ?></p>
+                                                        <hr> 
+                                                        <strong><i class="fa fa-list"></i> Comida Favorita</strong>
+                                                        <p class="text-muted"><?php echo($value['comida_favorita']); ?></p>
+                                                        <hr>  
+                                                        <strong><i class="fa fa-music"></i> Artista Favorito</strong>
+                                                        <p class="text-muted"><?php echo($value['artista_favorito']); ?></p>
+                                                        <hr>  
+                                                         
+                                                        <strong><i class="fas fa-pencil-alt"></i> Color Favorito</strong>
+                                                        <p class="text-muted"><?php echo($value['color_favorito']); ?></p>
+                                                        <hr>  
+                                                         
                                                    
-                                                    <h5 class="text-danger">Comida Favorita <?php echo($value['comida_favorita']); ?></h5>
-                                                    <h5 class="text-primary">Artista Favorito <?php echo($value['artista_favorito']); ?></h5>
-                                                    <h5 class="text-info">Color Favorito <?php echo($value['color_favorito']); ?></h5>
+                                                    <a href="index.php?pagina=editar&token=<?php echo $value["token"]; ?>" class="btn btn-sm float-right btn-primary"><i class="fa fa-edit"></i> Editar</a>
                                                 </div>
-                                            </div>                                  
+                                            </div>                                 
                                         <?php endforeach ?> 
                                     <?php endif; ?>
                                     
@@ -262,4 +288,8 @@ if ($_SESSION["status"] == 1) {
         <!-- End of Content Wrapper -->
 
     </div>
+
+    <script>
+        $(".table").dataTables();
+    </script>
 

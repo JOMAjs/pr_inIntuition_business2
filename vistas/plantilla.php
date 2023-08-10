@@ -12,6 +12,7 @@ session_start();
 	<title>Webplot Con MVC</title>
 	
 	<!-- Custom fonts for this template-->
+	<link href="vistas/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="vistas/plugins/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 	
 	<link
@@ -27,7 +28,7 @@ session_start();
 	<script src="vistas/plugins/jquery/jquery.js"></script>
 	<script src="vistas/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
-<body class="bg-gradient-default">
+<body class="bg-gradient-default" >
 	<?php if (isset($_GET["pagina"])){  ?>
 		<?php if (  $_GET["pagina"] == "inicio" || $_GET["pagina"] == "salir" || $_GET["pagina"] == "editar") 
 		    {include "paginas/".$_GET["pagina"].".php"; }  

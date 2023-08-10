@@ -167,13 +167,21 @@ class FormsControlador {
 		}	
 	}*/
 
-	public function EliminarRegistro() {
+	public function EliminarRegistro() { //imagen
 		if (isset($_POST["eliminarRegistro"])) {
 			$usuario = ModeloFormularios::SeleccionarRegistros("registro", "token", $_POST["eliminarRegistro"]);
-			$CompararToken = md5($usuario[2]."+".$usuario[3]); #usuarioNombre+usuarioEmail
+			$CompararToken = md5($usuario[2]."+".$usuario[7]); #usuarioNombre+usuarioEmail
 
 			if ($CompararToken == $_POST["eliminarRegistro"]) {
+
+				$image = $_POST["imagen"];
+				$userfile = basename($image);
+				$filepath = "../vistas/image/productos/$userfile";
+				if (file_exists($filepath)) { unlink($filepath); }
+
 				$respuesta = ModeloFormularios::EliminarRegistro("registro", $_POST["eliminarRegistro"]);
+				
+
 				
 				if ($respuesta == "ok") {
 					echo '<script> if( window.history.replaceState ) {
